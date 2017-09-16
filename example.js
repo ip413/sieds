@@ -1,5 +1,5 @@
 "use strict"
-var SimpleStore = require("sieds"),
+var SimpleStore = require("./Sieds"),
     store = new SimpleStore({numbers: ['1', '2', '3']}),
     state = store.get();
 state.numbers[0] = '8';

@@ -1,6 +1,6 @@
 "use strict"
 var failedTests = [],
-    SimpleStore = require("./SimpleStore"),
+    SimpleStore = require("./Sieds"),
     store,
     tests = 0;
 
