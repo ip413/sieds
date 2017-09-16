@@ -4,10 +4,10 @@ var failedTests = [],
     store;
 
 store = new SimpleStore();
-makeTest("another instance", store.get() === store.get(), false);
+makeTest("should return another instance and the same value every time", store.get() === store.get(), false);
 
 store = new SimpleStore({'a': 'a'});
-makeTest("2", store.get(), {'a': 'a'});
+makeTest("should initialize state in constructor", store.get(), {'a': 'a'});
 
 store = new SimpleStore();
 store.set({'b': 'b'});
@@ -22,7 +22,7 @@ function makeTest(testName, has, exptected) {
 }
 
 function areValuesEqual(value1, value2) {
-    if (value1.constructor === value2.constructor && value1.constructor === Array) {
+    if (value1.constructor === value2.constructor && (value1.constructor === Array || value1.constructor === Object)) {
         return JSON.stringify(value1) === JSON.stringify(value2);
     } else {
         return value1 === value2;

@@ -1,7 +1,8 @@
 function SimpleStore(initialState) {
-    var currentState = {};
+    var currentState = initialState || {};
 
-    SimpleStore.prototype.set = function(value) {
+    SimpleStore.prototype.set = function(state) {
+        currentState = cloneObject(state);
         return cloneObject(currentState);
     }
 
