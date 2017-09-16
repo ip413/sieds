@@ -47,6 +47,59 @@ var failedTests = [],
 }
 
 {
+    var callbackCalled = 0,
+        store = new SimpleStore();
+    store.addListener('d', () => callbackCalled++)
+    makeTest("shouldn't call listener", callbackCalled, 0);
+    store.set('d', true);
+    makeTest("should call listener once", callbackCalled, 1);
+    store.set('d', true);
+    makeTest("should call listener once", callbackCalled, 2);
+}
+
+{
+    var store = new SimpleStore(),
+        callback1Called = 0;
+        callback2Called = 0,
+        callback1 = () => {callback1Called++},
+        callback2 = () => {callback2Called++};
+    store.addListener('d', callback1);
+    store.addListener('d', callback2);
+    store.removeListener('d');
+    store.set('d', true);
+    makeTest("should remove listener by key", callback1Called, 0);
+    makeTest("should remove listener by key", callback2Called, 0);
+}
+
+{
+    var store = new SimpleStore(),
+        callback1Called = 0;
+        callback2Called = 0,
+        callback1 = () => {callback1Called++},
+        callback2 = () => {callback2Called++};
+    store.addListener('d', callback1);
+    store.addListener('d', callback2);
+    store.removeListener(callback1);
+    store.set('d', true);
+    makeTest("should remove listener by reference", callback1Called, 0);
+    makeTest("shouldn't remove listener by reference", callback2Called, 1);
+}
+
+() => {
+    var store = new SimpleStore(),
+        callback1Called = 0;
+        callback2Called = 0,
+        callback1 = () => {callback1Called++},
+        callback2 = () => {callback2Called++};
+    store.addListener('d', callback1);
+    store.addListener('d', callback2);
+    store.removeListener('d', callback1);
+    store.set('d', true);
+    makeTest("should remove listener by key and reference", callback1Called, 0);
+    makeTest("shouldn't remove listener by key and reference", callback2Called, 1);
+}()
+
+{
     makeTest("should return the same state in set and followed get", store.set({'c': 'c'}), store.get());
 }
 
