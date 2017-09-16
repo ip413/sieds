@@ -1,1 +1,2 @@
-# Simple store - immutable storage, for blazing fast Single Source of Truth implementations
+# Simple Store
+Immutable storage, for blazing fast Single Source of Truth implementations
