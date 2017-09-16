@@ -1,0 +1,1 @@
+# Simple store - immutable storage, for blazing fast Single Source of Truth implementations
