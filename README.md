@@ -1,3 +1,6 @@
+
+[![codecov.io](https://codecov.io/gh/ip413/sieds/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/ip413/sieds/branch/master/graphs/badge.svg?branch=master)
+
 # sieds - Simple Immutable Events Driven Store
 Simple storage for blazing fast development.
 
