@@ -4,7 +4,7 @@
   "description": "Immutable storage, for blazing fast Single Source of Truth implementations",
   "main": "SimpleStore.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodejs Sieds_spec.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ip413/simple-store#readme",
   "devDependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "tap": "^10.7.2"
   }
 }

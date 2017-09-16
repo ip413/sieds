@@ -1,75 +1,85 @@
 "use strict"
-var failedTests = [],
-    SimpleStore = require("./Sieds"),
-    store,
-    tests = 0;
+var SimpleStore = require("./Sieds"),
+    tap = require('tap'),
+    store;
 
-(() => {
+
+tap.test("", function(t) {
     store = new SimpleStore();
-    makeTest("should return another instance and the same value every time", store.get() === store.get(), false);
-})();
+    tap.equal(store.get() === store.get(), false, "should return another instance and the same value every time");;
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store = new SimpleStore({'a': 'a'});
-    makeTest("should initialize state in constructor", store.get(), {'a': 'a'});
-})();
+    tap.strictSame(store.get(), {'a': 'a'}, "should initialize state in constructor");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store = new SimpleStore();
     store.set({'b': 'b'});
-    makeTest("should set state by set", store.get(), {'b': 'b'});
-})();
+    tap.strictSame(store.get(), {'b': 'b'}, "should set state by set");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store.set({});
     store.set('b', 'b');
-    makeTest("should set simple key value property by set", store.get(), {'b': 'b'});
-})();
+    tap.strictSame(store.get(), {'b': 'b'}, "should set simple key value property by set");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store.set({});
     store.set('c', {c: 'c'});
-    makeTest("should set simple key reference property by set", store.get(), {'c': {c: 'c'}});
-})();
+    tap.strictSame(store.get(), {'c': {c: 'c'}}, "should set simple key reference property by set");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store.set({c: 'c', d: 'd'});
-    makeTest("should return property for simple key", store.get('d'), 'd');
-})();
+    tap.equal(store.get('d'), 'd', "should return property for simple key");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store.set({c: 'c', d: {e: ['e']}});
-    makeTest("should return property for object key", store.get('d.e[0]'), 'e');
-})();
+    tap.equal(store.get('d.e[0]'), 'e', "should return property for object key");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     store.set({c: 'c', d: {e: ['e']}});
     store.set('d.e[0]', 'f');
-    makeTest("should set property for object key", store.get('d.e[0]'), 'f');
-})();
+    tap.equal(store.get('d.e[0]'), 'f', "should set property for object key");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     var callbackCalled = 0,
         store = new SimpleStore();
     store.addListener('d', () => callbackCalled++)
-    makeTest("shouldn't call listener", callbackCalled, 0);
+    tap.equal(callbackCalled, 0, "shouldn't call listener");
     store.set('d', true);
-    makeTest("should call listener once", callbackCalled, 1);
+    tap.equal(callbackCalled, 1, "should call listener once");
     store.set('d', true);
-    makeTest("should call listener once", callbackCalled, 2);
-})();
+    tap.equal(callbackCalled, 2, "should call listener once");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     var callbackCalled = 0,
         store = new SimpleStore(),
         callback1 = () => callbackCalled++;
     store.addListener('d', callback1);
     store.addListener('d', callback1);
     store.set('d', true);
-    makeTest("should call listener once", callbackCalled, 1);
-})();
+    tap.equal(callbackCalled, 1, "should call listener once");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     var store = new SimpleStore(),
         callback1Called = 0,
         callback2Called = 0,
@@ -79,11 +89,12 @@ var failedTests = [],
     store.addListener('d', callback2);
     store.removeListener('d');
     store.set('d', true);
-    makeTest("should remove listener by key", callback1Called, 0);
-    makeTest("should remove listener by key", callback2Called, 0);
-})();
+    tap.equal(callback1Called, 0, "should remove listener by key");
+    tap.equal(callback2Called, 0, "should remove listener by key");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     var store = new SimpleStore(),
         callback1Called = 0,
         callback2Called = 0,
@@ -93,11 +104,12 @@ var failedTests = [],
     store.addListener('d', callback2);
     store.removeListener(callback1);
     store.set('d', true);
-    makeTest("should remove listener by reference", callback1Called, 0);
-    makeTest("shouldn't remove listener by reference", callback2Called, 1);
-})();
+    tap.equal(callback1Called, 0, "should remove listener by reference");
+    tap.equal(callback2Called, 1, "shouldn't remove listener by reference");
+    t.end();
+});
 
-(() => {
+tap.test("", function(t) {
     var store = new SimpleStore(),
         callback1Called = 0,
         callback2Called = 0,
@@ -107,40 +119,13 @@ var failedTests = [],
     store.addListener('d', callback2);
     store.removeListener('d', callback1);
     store.set('d', true);
-    makeTest("should remove listener by key and reference", callback1Called, 0);
-    makeTest("shouldn't remove listener by key and reference", callback2Called, 1);
-    makeTest("shouldn't remove listener by reference", callback2Called, 1);
-})();
+    tap.equal(callback1Called, 0, "should remove listener by key and reference");
+    tap.equal(callback2Called, 1, "shouldn't remove listener by key and reference");
+    tap.equal(callback2Called, 1, "shouldn't remove listener by reference");
+    t.end();
+});
 
-(() => {
-    makeTest("should return the same state in set and followed get", store.set({'c': 'c'}), store.get());
-})();
-
-function makeTest(testName, has, exptected) {
-    if (!areValuesEqual(has, exptected)) {
-        failedTests.push([testName, has, exptected])
-        console.log("test: ", testName, "FAILED!", "\n\t", "has: ", has, "\texpected: ", exptected);
-    }
-    tests++;
-}
-
-function areValuesEqual(value1, value2) {
-    if ((value1 === undefined || value1 === null) && value1 !== value2) {
-        return false;
-    }
-    if (value1.constructor === value2.constructor && (value1.constructor === Array || value1.constructor === Object)) {
-        return JSON.stringify(value1) === JSON.stringify(value2);
-    } else {
-        return value1 === value2;
-    }
-}
-
-console.log("\n\n----------------------------- \nSUMMARY")
-if(failedTests.length > 0) {
-    console.log('failed tests: ' + failedTests.length + '/' + tests + ' :')
-    for (var test in failedTests) {
-        console.log(failedTests[test]);
-    }
-} else {
-    console.log('OK, all tests passed\n\n');
-}
+tap.test("", function(t) {
+    tap.strictSame(store.set({'c': 'c'}), store.get(), "should return the same state in set and followed get");;
+    t.end();
+});
