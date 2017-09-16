@@ -1,8 +1,8 @@
 var _ = require("lodash");
 
 function SimpleStore(initialState) {
-    var currentState = initialState || {};
-    var listeners = {};
+    var currentState = initialState || {},
+        listeners = {};
 
     /**
      * Adds listener to specific store key.
@@ -29,34 +29,14 @@ function SimpleStore(initialState) {
      * @params {Function}   reference
      */
     SimpleStore.prototype.removeListener = function removeListener () {
-        // Removing by key
         if (arguments.length === 1 && arguments[0].constructor === String) {
-            delete listeners[arguments[0]];
-            return;
+            return removeListenerByKey(arguments[0]);
         }
-
-        // Removing by reference
         if (arguments.length === 1 && arguments[0].constructor === Function) {
-            for (var key in listeners) {
-                for (var i in listeners[key]) {
-                    if (listeners[key][i] === arguments[0]) {
-                        listeners[key].splice(i, 1);
-                    }
-                }
-            }
-            return;
+            return removeListenerByReference(arguments[0]);
         }
-
-        // Removing by key and reference
         if (arguments.length === 2 && arguments[0].constructor === String && arguments[1].constructor === Function) {
-            var key = arguments[0],
-                listener = arguments[1];
-            for (var i in listeners[key]) {
-                if (listeners[key][i] === listener) {
-                    listeners[key].splice(i, 1);
-                }
-            }
-            return;
+            return removeListenerByKeyAndReference(arguments[0], arguments[1]);
         }
 
         throw "Can't understand arguments. It should be key or listener or key and listener."
@@ -111,8 +91,8 @@ function SimpleStore(initialState) {
     function setProperty(key, value) {
         currentState = cloneObject(currentState);
         _.set(currentState, key, cloneObject(value));
-        callListeners(key);
-        return cloneObject(currentState, cloneObject(value));
+        callListeners(key, cloneObject(value));
+        return cloneObject(currentState);
     }
 
     function callListeners(key, value) {
@@ -125,6 +105,28 @@ function SimpleStore(initialState) {
 
     function isListenerAlreadyListening(array, listener) {
         return array.indexOf(listener) > -1;
+    }
+
+    function removeListenerByKey(key) {
+        delete listeners[key];
+    }
+
+    function removeListenerByReference(reference) {
+        for (var key in listeners) {
+            for (var i in listeners[key]) {
+                if (listeners[key][i] === reference) {
+                    listeners[key].splice(i, 1);
+                }
+            }
+        }
+    }
+
+    function removeListenerByKeyAndReference(key, reference) {
+        for (var i in listeners[key]) {
+            if (listeners[key][i] === reference) {
+                listeners[key].splice(i, 1);
+            }
+        }
     }
 
     function setState(state) {
