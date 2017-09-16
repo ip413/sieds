@@ -1,22 +1,28 @@
 var failedTests = [],
-    tests = 0,
     SimpleStore = require("./SimpleStore"),
-    store;
+    store,
+    tests = 0;
 
 store = new SimpleStore();
 makeTest("should return another instance and the same value every time", store.get() === store.get(), false);
 
+
 store = new SimpleStore({'a': 'a'});
 makeTest("should initialize state in constructor", store.get(), {'a': 'a'});
 
+
 store = new SimpleStore();
 store.set({'b': 'b'});
-makeTest("3", store.get(), {'a': 'a'});
+makeTest("should set state by set", store.get(), {'b': 'b'});
+
+
+makeTest("should return the same state in set and followed get", store.get({'c': 'c'}), store.get());
+
 
 function makeTest(testName, has, exptected) {
     if (!areValuesEqual(has, exptected)) {
         failedTests.push([testName, has, exptected])
-        console.log("test", testName, "FAILED!", "\n\t", "has: ", has, "\texpected: ", exptected);
+        console.log("test: ", testName, "FAILED!", "\n\t", "has: ", has, "\texpected: ", exptected);
     }
     tests++;
 }
