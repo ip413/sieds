@@ -2,22 +2,42 @@ var failedTests = [],
     SimpleStore = require("./SimpleStore"),
     store,
     tests = 0;
+{
+    store = new SimpleStore();
+    makeTest("should return another instance and the same value every time", store.get() === store.get(), false);
+}
 
-store = new SimpleStore();
-makeTest("should return another instance and the same value every time", store.get() === store.get(), false);
+{
+    store = new SimpleStore({'a': 'a'});
+    makeTest("should initialize state in constructor", store.get(), {'a': 'a'});
+}
 
+{
+    store = new SimpleStore();
+    store.set({'b': 'b'});
+    makeTest("should set state by set", store.get(), {'b': 'b'});
+}
 
-store = new SimpleStore({'a': 'a'});
-makeTest("should initialize state in constructor", store.get(), {'a': 'a'});
+{
+    store.set({});
+    store.set('b', 'b');
+    makeTest("should set simple key value property by set", store.get(), {'b': 'b'});
+}
 
+{
+    store.set({});
+    store.set('c', {c: 'c'});
+    makeTest("should set simple key reference property by set", store.get(), {'c': {c: 'c'}});
+}
 
-store = new SimpleStore();
-store.set({'b': 'b'});
-makeTest("should set state by set", store.get(), {'b': 'b'});
+{
+    store.set({c: 'c', d: 'd'});
+    makeTest("should return property for simple key", store.get('d'), 'd');
+}
 
-
-makeTest("should return the same state in set and followed get", store.get({'c': 'c'}), store.get());
-
+{
+    makeTest("should return the same state in set and followed get", store.set({'c': 'c'}), store.get());
+}
 
 function makeTest(testName, has, exptected) {
     if (!areValuesEqual(has, exptected)) {
