@@ -58,11 +58,21 @@ var failedTests = [],
 }
 
 {
+    var callbackCalled = 0,
+        store = new SimpleStore(),
+        callback1 = () => callbackCalled++;
+    store.addListener('d', callback1);
+    store.addListener('d', callback1);
+    store.set('d', true);
+    makeTest("should call listener once", callbackCalled, 1);
+}
+
+{
     var store = new SimpleStore(),
         callback1Called = 0;
         callback2Called = 0,
-        callback1 = () => {callback1Called++},
-        callback2 = () => {callback2Called++};
+        callback1 = () => callback1Called++,
+        callback2 = () => callback2Called++;
     store.addListener('d', callback1);
     store.addListener('d', callback2);
     store.removeListener('d');
@@ -75,8 +85,8 @@ var failedTests = [],
     var store = new SimpleStore(),
         callback1Called = 0;
         callback2Called = 0,
-        callback1 = () => {callback1Called++},
-        callback2 = () => {callback2Called++};
+        callback1 = () => callback1Called++,
+        callback2 = () => callback2Called++;
     store.addListener('d', callback1);
     store.addListener('d', callback2);
     store.removeListener(callback1);
@@ -89,8 +99,8 @@ var failedTests = [],
     var store = new SimpleStore(),
         callback1Called = 0;
         callback2Called = 0,
-        callback1 = () => {callback1Called++},
-        callback2 = () => {callback2Called++};
+        callback1 = () => callback1Called++,
+        callback2 = () => callback2Called++;
     store.addListener('d', callback1);
     store.addListener('d', callback2);
     store.removeListener('d', callback1);

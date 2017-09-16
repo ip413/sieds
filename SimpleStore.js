@@ -6,14 +6,16 @@ function SimpleStore(initialState) {
 
     /**
      * Adds listener to specific store key.
-     * @param {String} key
-     * @param {Function} handler
+     * @param {String}      key
+     * @param {Function}    listener
      */
-    SimpleStore.prototype.addListener = function addListener (key, handler) {
+    SimpleStore.prototype.addListener = function addListener (key, listener) {
         if (!listeners.hasOwnProperty(key)) {
             listeners[key] = [];
         }
-        listeners[key].push(handler);
+        if (!isListenerAlreadyListening(listeners[key], listener)) {
+            listeners[key].push(listener);
+        }
     }
 
     /**
@@ -119,6 +121,10 @@ function SimpleStore(initialState) {
                 listeners[key][handler].call(this, value);
             }
         }
+    }
+
+    function isListenerAlreadyListening(array, listener) {
+        return array.indexOf(listener) > -1;
     }
 
     function setState(state) {
