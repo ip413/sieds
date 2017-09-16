@@ -1,3 +1,4 @@
+"use strict"
 var failedTests = [],
     SimpleStore = require("./SimpleStore"),
     store,
@@ -70,7 +71,7 @@ var failedTests = [],
 
 (() => {
     var store = new SimpleStore(),
-        callback1Called = 0;
+        callback1Called = 0,
         callback2Called = 0,
         callback1 = () => callback1Called++,
         callback2 = () => callback2Called++;
@@ -84,7 +85,7 @@ var failedTests = [],
 
 (() => {
     var store = new SimpleStore(),
-        callback1Called = 0;
+        callback1Called = 0,
         callback2Called = 0,
         callback1 = () => callback1Called++,
         callback2 = () => callback2Called++;
@@ -98,7 +99,7 @@ var failedTests = [],
 
 (() => {
     var store = new SimpleStore(),
-        callback1Called = 0;
+        callback1Called = 0,
         callback2Called = 0,
         callback1 = () => callback1Called++,
         callback2 = () => callback2Called++;
@@ -113,7 +114,6 @@ var failedTests = [],
 
 (() => {
     makeTest("should return the same state in set and followed get", store.set({'c': 'c'}), store.get());
-    makeTest("shouldn't remove listener by reference", callback2Called, 1);
 })();
 
 function makeTest(testName, has, exptected) {

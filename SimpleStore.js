@@ -1,3 +1,4 @@
+"use strict"
 var _ = require("lodash");
 
 function SimpleStore(initialState) {
@@ -65,7 +66,11 @@ function SimpleStore(initialState) {
     }
 
     /**
-     * Returns state or property under key
+     * Returns state or property under key.
+     *
+     * No arguments or one:
+     * @param {key}
+     *
      * @return {Object|Mixed}
      */
     SimpleStore.prototype.get = function get() {
