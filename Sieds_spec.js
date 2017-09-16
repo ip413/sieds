@@ -125,7 +125,15 @@ tap.test("", function(t) {
     t.end();
 });
 
+tap.test("errors", function(t) {
+    var store = new SimpleStore();
+    t.throws(function() {store.set('users')}, {}, { skip: true });
+    t.throws(function() {store.get({})}, {}, { skip: true });
+    t.throws(function() {store.removeListener('key', 'key')}, {}, { skip: true });
+    t.end();
+});
+
 tap.test("", function(t) {
-    tap.strictSame(store.set({'c': 'c'}), store.get(), "should return the same state in set and followed get");;
+    tap.strictSame(store.set({'c': 'y'}), store.get(), "should return the same state in set and followed get");;
     t.end();
 });

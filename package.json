@@ -1,10 +1,10 @@
 {
-  "name": "simple-store",
+  "name": "sieds",
   "version": "1.0.0",
   "description": "Immutable storage, for blazing fast Single Source of Truth implementations",
-  "main": "SimpleStore.js",
+  "main": "Sieds.js",
   "scripts": {
-    "test": "nodejs Sieds_spec.js"
+    "test": "tap ./**_spec.js --cov --coverage-report=lcov"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/ip413/simple-store#readme",
   "devDependencies": {
-    "istanbul": "^0.4.5",
     "lodash": "^4.17.4",
     "tap": "^10.7.2"
   }
