@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/ip413/simple-store#readme",
   "devDependencies": {
+    "istanbul": "^0.4.5",
     "lodash": "^4.17.4",
     "tap": "^10.7.2"
   }
