@@ -1,3 +1,5 @@
+var _ = require("lodash");
+
 function SimpleStore(initialState) {
     var currentState = initialState || {};
 
@@ -33,7 +35,7 @@ function SimpleStore(initialState) {
         }
 
         if (arguments.length === 1 && arguments[0].constructor === String) {
-            return cloneObject(currentState)[arguments[0]];
+            return _.get(cloneObject(currentState), arguments[0]);
         }
 
         throw "Can't understand arguments. None or one string is required.";
@@ -48,9 +50,8 @@ function SimpleStore(initialState) {
     }
 
     function setProperty(key, value) {
-        var temp = cloneObject(currentState);
-        temp[key] = value;
-        currentState = temp;
+        currentState = cloneObject(currentState);
+        _.set(currentState, key, value);
         return cloneObject(currentState);
     }
 

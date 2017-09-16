@@ -36,6 +36,17 @@ var failedTests = [],
 }
 
 {
+    store.set({c: 'c', d: {e: ['e']}});
+    makeTest("should return property for object key", store.get('d.e[0]'), 'e');
+}
+
+{
+    store.set({c: 'c', d: {e: ['e']}});
+    store.set('d.e[0]', 'f');
+    makeTest("should set property for object key", store.get('d.e[0]'), 'f');
+}
+
+{
     makeTest("should return the same state in set and followed get", store.set({'c': 'c'}), store.get());
 }
 
@@ -48,6 +59,9 @@ function makeTest(testName, has, exptected) {
 }
 
 function areValuesEqual(value1, value2) {
+    if ((value1 === undefined || value1 === null) && value1 !== value2) {
+        return false;
+    }
     if (value1.constructor === value2.constructor && (value1.constructor === Array || value1.constructor === Object)) {
         return JSON.stringify(value1) === JSON.stringify(value2);
     } else {

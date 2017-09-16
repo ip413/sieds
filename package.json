@@ -1,0 +1,27 @@
+{
+  "name": "simple-store",
+  "version": "1.0.0",
+  "description": "Immutable storage, for blazing fast Single Source of Truth implementations",
+  "main": "SimpleStore.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ip413/simple-store.git"
+  },
+  "keywords": [
+    "storage",
+    "immut",
+    "model"
+  ],
+  "author": "ip413as@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ip413/simple-store/issues"
+  },
+  "homepage": "https://github.com/ip413/simple-store#readme",
+  "devDependencies": {
+    "lodash": "^4.17.4"
+  }
+}
