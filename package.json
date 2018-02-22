@@ -12,7 +12,8 @@
   },
   "keywords": [
     "storage",
-    "immut",
+    "store",
+    "immutable",
     "model"
   ],
   "author": "ip413as@gmail.com",
