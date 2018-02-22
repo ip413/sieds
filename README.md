@@ -13,13 +13,13 @@ addListener()
 removeListener() 
 ```
 
-### set(obj {Object})
+### set(value {Object})
 Replace current state with obj.
 ```js
 set({users: ['Tom', 'Katy']}
 ```
 
-### set(key {Object}, value {Mixed})
+### set(key {String}, value {Mixed})
 Replace property with provided value.
 ```js
 set('users', ['Tom', 'Katy'])  
@@ -67,7 +67,7 @@ store.set('numbers[1]', 6) // "second number: 6"
 ```
 ## Pitfalls
 If you are listening on nested event like `users.europe.spain[34]` you can overlook change in this field, because it could have place during `set("users.europe.spain", [...]")`.  
-You are listening on `set()` first argument - `key`, not on data change.
+You are listening on `set()` first argument - `key`, not on actual data change.
 
 ## License
 MIT
