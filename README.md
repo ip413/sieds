@@ -17,7 +17,7 @@ removeListener()
 Replace current state with obj.
 ```js
 set({users: ['Tom', 'Katy']}
-```set
+```
 
 ### set(key {Object}, value {Mixed})
 Replace property with provided value.
