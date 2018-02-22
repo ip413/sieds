@@ -1,6 +1,6 @@
 {
   "name": "sieds",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Immutable storage, for blazing fast Single Source of Truth implementations",
   "main": "Sieds.js",
   "scripts": {
