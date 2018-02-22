@@ -17,7 +17,7 @@ removeListener()
 Replace current state with obj.
 ```js
 set({users: ['Tom', 'Katy']}
-```
+```set
 
 ### set(key {Object}, value {Mixed})
 Replace property with provided value.
@@ -66,7 +66,8 @@ store.addListener('numbers[1]', (value) => {console.log("second number:", value)
 store.set('numbers[1]', 6) // "second number: 6"
 ```
 ## Pitfalls
-If you are listening on nested event like "users.europe.spain[34]" you can overlook change in this field, because it could have place during set("users.europe.spain", [...]"). You are listening on set call, not on data change.
+If you are listening on nested event like `users.europe.spain[34]` you can overlook change in this field, because it could have place during `set("users.europe.spain", [...]")`.  
+You are listening on `set()` first argument - `key`, not on data change.
 
 ## License
 MIT
